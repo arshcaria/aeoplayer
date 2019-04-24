@@ -5,6 +5,8 @@
 
 cmake_minimum_required(VERSION 3.4.1)
 
+file(GLOB source_file src/main/jni/*.cpp src/main/jni/*.h)
+
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
@@ -18,7 +20,7 @@ add_library(
         SHARED
 
         # Provides a relative path to your source file(s).
-        src/main/jni/native-lib.cpp
+        ${source_file}
 )
 
 # include headers for ffmpeg
@@ -47,8 +49,9 @@ target_link_libraries( # Specifies the target library.
         native-lib
 
         # ffmpeg static libraries
-        avcodec avfilter avformat avutil swresample swscale
+        avformat avcodec swscale avutil avfilter swresample
 
+        z
         # Links the target library to the log library
         # included in the NDK.
         ${log-lib})
